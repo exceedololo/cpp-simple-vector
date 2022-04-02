@@ -21,6 +21,11 @@ public:
     explicit ArrayPtr(Type* raw_ptr) noexcept {
         raw_ptr_ = raw_ptr;
     }
+    
+    ArrayPtr(ArrayPtr&& other) 
+        : raw_ptr_(nullptr) {
+        std::swap(raw_ptr_, other.raw_ptr_); 
+    }
 
     // Запрещаем копирование
     ArrayPtr(const ArrayPtr&) = delete;
