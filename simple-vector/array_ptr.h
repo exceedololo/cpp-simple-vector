@@ -22,6 +22,7 @@ public:
         raw_ptr_ = raw_ptr;
     }
     
+    //мув-конструктор из временного объекта
     ArrayPtr(ArrayPtr&& other) 
         : raw_ptr_(nullptr) {
         std::swap(raw_ptr_, other.raw_ptr_); 
@@ -37,6 +38,15 @@ public:
 
     // Запрещаем присваивание
     ArrayPtr& operator=(const ArrayPtr&) = delete;
+    
+    //Делаем оператор присваивания для временного объекта
+    ArrayPtr& operator=(ArrayPtr&& other){
+        if (this != &other){
+            ArrayPtr temp(std::move(other));
+            std::swap(temp);
+            }
+        return *this;  
+    }
 
     // Прекращает владением массивом в памяти, возвращает значение адреса массива
     // После вызова метода указатель на массив должен обнулиться
